@@ -1,0 +1,13 @@
+{
+    "crypto_list": ["BTCUSDT", "ETHUSDT", "SOLUSDT", "TONUSDT"],
+    "timeframes": ["1s", "1m", "5m", "15m", "1h", "4h", "1d"],
+    "candles_amount": {
+        "1d": 1825,  
+        "4h": 2190,  
+        "1h": 8760,  
+        "15m": 672, 
+        "5m": 2016, 
+        "1m": 4320,
+        "1s": 3600
+    }
+}

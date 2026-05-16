@@ -1,0 +1,34 @@
+.error {
+  margin-top: 16px;
+  border-radius: 14px;
+  padding: 16px 20px;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.error__title {
+  font: 800 13px/1.3 var(--sans);
+  color: rgba(239, 68, 68, 0.95);
+  margin-bottom: 8px;
+}
+
+.error__body {
+  font: 12px/1.5 var(--mono);
+  color: rgba(239, 68, 68, 0.85);
+  background: rgba(239, 68, 68, 0.05);
+  padding: 8px 12px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  word-break: break-word;
+}
+
+.error__hint {
+  font: 11px/1.4 var(--sans);
+  color: var(--text-dim);
+  margin-top: 4px;
+}

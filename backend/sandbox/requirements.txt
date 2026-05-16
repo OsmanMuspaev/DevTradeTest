@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+pydantic
+numpy
+psycopg2-binary
+numba
+bottleneck
+docker

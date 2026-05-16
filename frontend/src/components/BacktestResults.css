@@ -1,0 +1,161 @@
+.backtest-results {
+  padding: 8px;
+  overflow-y: auto;
+  flex-shrink: 0;
+  max-height: 260px;
+}
+
+.backtest-results__header {
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.backtest-results__title {
+  font: 800 13px/1.2 var(--sans);
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.backtest-results__subtitle {
+  font: 11px/1.3 var(--mono);
+  color: var(--text-dim);
+}
+
+.backtest-results__stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.backtest-results__stat {
+  padding: 8px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+}
+
+.backtest-results__stat-label {
+  font: 600 9px/1 var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--text-dim);
+  margin-bottom: 4px;
+}
+
+.backtest-results__stat-value {
+  font: 700 13px/1.2 var(--sans);
+  color: var(--text);
+}
+
+.backtest-results__stat-value--positive {
+  color: #22c55e;
+}
+
+.backtest-results__stat-value--negative {
+  color: #ef4444;
+}
+
+.backtest-results__section {
+  margin-top: 8px;
+}
+
+.backtest-results__section-title {
+  font: 700 11px/1 var(--mono);
+  color: var(--text-dim);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.backtest-results__error {
+  padding: 12px;
+  border-radius: 10px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  color: #ef4444;
+  font: 11px/1.4 var(--mono);
+  text-align: center;
+}
+
+.backtest-results__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  color: var(--text-dim);
+  font: 11px/1 var(--mono);
+}
+
+.backtest-results__empty {
+  padding: 20px;
+  text-align: center;
+  color: var(--text-dim);
+  font: 11px/1.4 var(--mono);
+}
+
+/* Список сделок с ограничением высоты */
+.backtest-results__trades {
+  max-height: 150px;
+  overflow-y: auto;
+  font-size: 10px;
+}
+
+.backtest-results__trades-list {
+  max-height: 150px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-right: 4px;
+}
+
+.backtest-results__trades-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.backtest-results__trades-list::-webkit-scrollbar-track {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+.backtest-results__trades-list::-webkit-scrollbar-thumb {
+  background: #a78bfa;
+  border-radius: 4px;
+}
+
+.backtest-results__trade {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 8px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.02);
+  font-size: 10px;
+  font-family: var(--mono);
+}
+
+.backtest-results__trade-side {
+  font-weight: 700;
+}
+
+.backtest-results__trade-side--long {
+  color: #22c55e;
+}
+
+.backtest-results__trade-side--short {
+  color: #ef4444;
+}
+
+.backtest-results__trade-pnl {
+  font-weight: 600;
+}
+
+.backtest-results__trade-pnl--positive {
+  color: #22c55e;
+}
+
+.backtest-results__trade-pnl--negative {
+  color: #ef4444;
+}

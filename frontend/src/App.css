@@ -1,0 +1,26 @@
+/* Глобальные переменные и сбросы */
+@import './styles/variables.css';
+@import './styles/global.css';
+@import './styles/utils.css';
+
+/* Компоненты */
+@import './components/Topbar.css';
+@import './components/SidePanel.css';
+@import './components/SummaryBlock.css';
+@import './components/ChartSection.css';
+@import './components/CandlestickChart.css';
+@import './components/Error.css';
+@import './components/Empty.css';
+@import './components/StrategyEditor.css';
+@import './components/AiChat.css';
+
+/* Дополнительные переменные, которых нет в variables.css */
+:root {
+  --chart-bg: rgba(8, 12, 23, 0.6);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --chart-bg: rgba(248, 250, 252, 0.8);
+  }
+}

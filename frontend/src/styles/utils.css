@@ -1,0 +1,12 @@
+.mono {
+  font-family: var(--mono);
+}
+
+.muted {
+  color: var(--text-dim);
+}
+
+/* Скрываем ненужное */
+.pill.mono {
+  display: none;
+}

@@ -1,0 +1,330 @@
+.ai {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ai__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.ai__title {
+  font: 900 14px/1.1 var(--sans);
+  letter-spacing: -0.2px;
+}
+
+.ai__subtitle {
+  margin-top: 6px;
+  color: var(--text-dim);
+  font-size: 11px;
+  max-width: 240px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ai__btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+  cursor: pointer;
+  font: 900 14px/1 var(--mono);
+  transition:
+    transform 0.06s,
+    background 0.15s;
+}
+
+.ai__btn:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.ai__btn:active {
+  transform: translateY(0.5px);
+}
+
+.ai__btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Контейнер для табов (кнопок чатов) */
+.ai-tabs {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 2px 4px 6px;
+  margin: 0 -2px;
+}
+
+.ai-tabs::-webkit-scrollbar {
+  display: none;
+}
+.ai-tabs {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.ai-tab-wrapper {
+  flex: 0 0 auto;
+}
+
+.ai-tab {
+  flex: 0 0 auto;
+  max-width: 160px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-dim);
+  cursor: pointer;
+  font: 700 11px/1 var(--mono);
+  letter-spacing: 0.2px;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 6px; 
+}
+
+.ai-tab:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.ai-tab--active {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: #0b1020;
+  text-shadow: rgba(255, 255, 255, 0.35) 0 1px 0;
+}
+
+.ai-tab--active::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.72),
+    rgba(167, 139, 250, 0.32),
+    rgba(59, 130, 246, 0.22)
+  );
+  background-size: 220% 220%;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(18px) saturate(1.15);
+  z-index: -1;
+  animation: chat-glass-flow 5.5s ease-in-out infinite;
+}
+
+.ai-tab--active::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: radial-gradient(
+    280px 60px at 22% 10%,
+    rgba(255, 255, 255, 0.15),
+    transparent 60%
+  );
+  opacity: 0.8;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ai-tab__name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;  
+}
+
+.ai-tab__actions {
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.15s;
+  flex-shrink: 0;
+}
+
+.ai-tab:hover .ai-tab__actions {
+  opacity: 1;
+}
+
+.ai-tab__rename,
+.ai-tab__delete {
+  font-size: 10px;
+  padding: 2px 4px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.15s;
+}
+
+.ai-tab__rename:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fbbf24;
+}
+
+.ai-tab__delete:hover {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.ai-tab__rename-input {
+  max-width: 150px;
+  padding: 6px 8px;
+  border-radius: 20px;
+  border: 1px solid rgba(167, 139, 250, 0.5);
+  background: rgba(0, 0, 0, 0.4);
+  color: var(--text);
+  font: 700 11px/1 var(--mono);
+  outline: none;
+}
+
+.ai-tab__rename-input:focus {
+  border-color: rgba(167, 139, 250, 0.8);
+  box-shadow: 0 0 0 2px rgba(167, 139, 250, 0.2);
+}
+
+.ai-log {
+  height: 360px;
+  overflow: auto;
+  padding-right: 2px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ai-empty {
+  padding: 10px 2px;
+  font: 600 12px/1.35 var(--sans);
+}
+
+.ai-msg {
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 10px 12px;
+  max-width: 100%;
+}
+
+.ai-msg--user {
+  margin-left: auto;
+  border-color: rgba(59, 130, 246, 0.18);
+  background: rgba(59, 130, 246, 0.08);
+}
+
+.ai-msg--assistant {
+  border-color: rgba(167, 139, 250, 0.18);
+  background: rgba(167, 139, 250, 0.07);
+}
+
+.ai-msg__meta {
+  font-size: 11px;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.ai-dot {
+  opacity: 0.65;
+}
+
+.ai-msg__content {
+  font: 13px/1.45 var(--sans);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.ai-compose {
+  display: grid;
+  grid-template-columns: 1fr 38px;
+  gap: 10px;
+  align-items: end;
+}
+
+.ai-compose__input {
+  min-height: 42px;
+  max-height: 120px;
+  resize: vertical;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 10px 12px;
+  color: var(--text);
+  font: 13px/1.45 var(--sans);
+  outline: none;
+}
+
+.ai-compose__input:focus-visible {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+@media (prefers-color-scheme: light) {
+  .ai-compose__input:focus-visible {
+    border-color: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.02);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+  }
+}
+
+.ai-compose__send {
+  width: 38px;
+  height: 38px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  color: var(--text);
+  font: 900 14px/1 var(--mono);
+  transition:
+    transform 0.06s,
+    background 0.15s;
+}
+
+.ai-compose__send:hover {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.ai-compose__send:active {
+  transform: translateY(0.5px);
+}
+
+.ai-compose__send:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ai-error {
+  border-radius: 14px;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  background: rgba(239, 68, 68, 0.06);
+  color: rgba(239, 68, 68, 0.92);
+  padding: 10px 12px;
+  font-size: 12px;
+  white-space: pre-wrap;
+}
+
+/* Анимация для активного чата */
+@keyframes chat-glass-flow {
+  0%,
+  100% {
+    background-position: 0% 50%;
+    filter: saturate(1) brightness(1);
+  }
+  50% {
+    background-position: 100% 50%;
+    filter: saturate(1.1) brightness(1.05);
+  }
+}

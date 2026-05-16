@@ -1,0 +1,183 @@
+services:
+  db:
+    image: postgres:15-alpine
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    container_name: database
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./database/candle/init.sql:/docker-entrypoint-initdb.d/candle_init.sql
+      - ./database/users/init.sql:/docker-entrypoint-initdb.d/users_init.sql
+
+  ai_db:
+    image: postgres:15-alpine
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${AI_POSTGRES_USER} -d ${AI_POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    container_name: ai_database
+    restart: always
+    environment:
+      POSTGRES_USER: ${AI_POSTGRES_USER}
+      POSTGRES_PASSWORD: ${AI_POSTGRES_PASSWORD}
+      POSTGRES_DB: ${AI_POSTGRES_DB}
+    volumes:
+      - ai_pgdata:/var/lib/postgresql/data
+      - ./database/ai/init.sql:/docker-entrypoint-initdb.d/ai_init.sql
+
+  nginx:
+    image: nginx:stable-alpine
+    container_name: nginx
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      frontend:
+        condition: service_started
+      core:
+        condition: service_started
+      db:
+        condition: service_healthy
+      gateway:
+        condition: service_started
+      users:
+        condition: service_started
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+
+  core:
+    build: 
+      context: ./backend/core
+      dockerfile: Dockerfile.core
+    container_name: core
+    restart: always
+    ports:
+      - "18080:18080"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    volumes:
+      - ./params.json:/app/params.json
+    environment:
+      - DB_URL=${DB_CONNECTION_STRING}
+      - REDIS_URL=redis://redis:6379
+      - LIVE_INTERVAL_MS=${LIVE_INTERVAL_MS}
+    
+  gateway:
+    build:
+      context: ./backend/api
+      dockerfile: Dockerfile.api
+    ports:
+      - "8000:8000"
+    container_name: gateway
+    depends_on:
+      - redis
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - USERS_URL=http://users:8005
+      - CORE_URL=http://core:18080
+
+  redis:
+    image: redis:7-alpine
+    container_name: devtrade-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+
+
+  ai:
+    build:
+      context: ./backend/ai
+      dockerfile: Dockerfile.ai
+    container_name: ai
+    restart: always
+    ports:
+      - "9000:9000" 
+    depends_on:
+      ai_db:
+        condition: service_healthy
+    environment:
+      - DB_URL=${AI_DB_CONNECTION_STRING}
+      - GROQ_API_KEY
+      - DEFAULT_MODEL
+      - DEFAULT_FAST_MODEL
+      - DEFAULT_TEMPERATURE
+      - DEFAULT_MAX_TOKENS
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.frontend
+    restart: always
+    container_name: frontend
+    volumes:
+      - ./params.json:/usr/share/nginx/html/params.json
+    environment:
+      - LIVE_INTERVAL_MS=${LIVE_INTERVAL_MS}
+
+  users:
+    build:
+      context: ./backend/users
+      dockerfile: Dockerfile.users
+    container_name: users
+    restart: always
+    ports:
+      - "8005:8005"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+      GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID}
+      GITHUB_CLIENT_SECRET: ${GITHUB_CLIENT_SECRET}
+      FRONTEND_URL: http://localhost
+  sandbox:
+    build:
+      context: ./backend/sandbox
+      dockerfile: Dockerfile.sandbox
+    container_name: sandbox
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: always
+    ports:
+      - "8010:8010"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DB_URL=${DB_CONNECTION_STRING}
+
+  devtrade-runner-builder:
+    build:
+      context: ./backend/sandbox
+      dockerfile: Dockerfile.runner
+      tags:
+        - "devtrade-runner:latest"
+    image: devtrade-runner:latest
+    profiles:
+      - build
+    command: ["echo", "Image built"]
+
+volumes:
+  pgdata:
+  ai_pgdata:
+  redis_data:

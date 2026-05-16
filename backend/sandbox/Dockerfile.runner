@@ -1,0 +1,21 @@
+FROM python:3.12-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY app/ .
+
+# Pre-compile numba JIT functions so each container run doesn't pay JIT cost
+RUN python3 - <<'PYEOF'
+import numpy as np
+from backtester import _run_simulation
+
+a = np.array([1.0, 2.0, 3.0])
+b = np.array([True, False, False])
+c = np.array([1.0, 1.0, 1.0])
+_run_simulation(a, a, a, a, b, b, b, b, c, 1000.0, 0.001, 0.0, 0.0, 0.0)
+PYEOF
+
+CMD ["python", "runner.py"]

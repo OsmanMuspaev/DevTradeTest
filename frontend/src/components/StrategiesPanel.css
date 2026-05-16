@@ -1,0 +1,79 @@
+.strategies-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.strategies-panel__tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.strategies-panel__tab {
+  flex: 1;
+  padding: 6px 8px;
+  border-radius: 20px;
+  border: none;
+  background: transparent;
+  color: var(--text-dim);
+  font: 600 11px/1 var(--mono);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.strategies-panel__tab:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+}
+
+.strategies-panel__tab--active {
+  background: rgba(167, 139, 250, 0.2);
+  color: #a78bfa;
+}
+
+.strategies-panel__content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.running-strategies {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.running-strategies__hint {
+  font-size: 11px;
+  margin-top: 8px;
+  opacity: 0.7;
+}
+
+.strategies-panel__content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding-right: 4px;
+}
+
+/* Кастомный скролл */
+.strategies-panel__content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.strategies-panel__content::-webkit-scrollbar-track {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+.strategies-panel__content::-webkit-scrollbar-thumb {
+  background: #a78bfa;
+  border-radius: 4px;
+}

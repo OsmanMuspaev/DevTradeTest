@@ -1,0 +1,97 @@
+/* ChartSection.css */
+
+/* Секция с графиком */
+.chart-section {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+/* Контейнер для графика */
+.chart-section__container {
+  flex: 1;
+  min-height: 400px;
+  width: 100%;
+  position: relative;
+}
+
+/* Оверлей загрузки */
+.chart-section__loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  border-radius: 16px;
+  z-index: 10;
+}
+
+/* Спиннер загрузки */
+.chart-section__spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--border);
+  border-top-color: #a78bfa;
+  border-radius: 50%;
+  animation: chart-section-spin 0.8s linear infinite;
+}
+
+@keyframes chart-section-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Индикатор загрузки старых свечей */
+.chart-section__loading-older {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-family: var(--mono);
+  color: var(--text-dim);
+  z-index: 10;
+  pointer-events: none;
+  animation: chart-section-fade-in 0.2s ease;
+}
+
+@keyframes chart-section-fade-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Статусная строка под графиком */
+.chart-section__status {
+  margin-top: 10px;
+  padding-top: 8px;
+  font-size: 11px;
+  color: var(--text-dim);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--border);
+}
+
+/* Пагинация */
+.chart-section__pagination {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}

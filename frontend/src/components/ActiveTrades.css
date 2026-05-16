@@ -1,0 +1,131 @@
+.active-trades {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+
+.active-trades__loading,
+.active-trades__empty {
+  padding: 32px 20px;
+  text-align: center;
+  color: var(--text-dim);
+  font: 13px/1.4 var(--mono);
+}
+
+.active-trades__hint {
+  font-size: 11px;
+  margin-top: 8px;
+  opacity: 0.7;
+}
+
+.active-trades__item {
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 12px;
+  transition: all 0.15s ease;
+}
+
+.active-trades__item--long {
+  border-left: 3px solid #22c55e;
+}
+
+.active-trades__item--short {
+  border-left: 3px solid #ef4444;
+}
+
+.active-trades__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.active-trades__symbol {
+  font: 800 14px/1 var(--mono);
+  color: var(--text);
+}
+
+.active-trades__side {
+  font: 700 10px/1 var(--mono);
+  padding: 3px 8px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.active-trades__side--long {
+  color: #22c55e;
+}
+
+.active-trades__side--short {
+  color: #ef4444;
+}
+
+.active-trades__close {
+  margin-left: auto;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: var(--text-dim);
+  transition: all 0.15s ease;
+}
+
+.active-trades__close:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.active-trades__body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.active-trades__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+}
+
+.active-trades__label {
+  color: var(--text-dim);
+  font-family: var(--mono);
+}
+
+.active-trades__value {
+  color: var(--text);
+  font-family: var(--mono);
+  font-weight: 500;
+}
+
+.active-trades__pnl {
+  font-weight: 700;
+  font-family: var(--mono);
+}
+
+.active-trades__pnl--positive {
+  color: #22c55e;
+}
+
+.active-trades__pnl--negative {
+  color: #ef4444;
+}
+
+.active-trades__strategy {
+  font-size: 11px;
+  opacity: 0.8;
+}

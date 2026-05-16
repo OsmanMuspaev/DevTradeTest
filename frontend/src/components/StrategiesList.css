@@ -1,0 +1,103 @@
+.strategies-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.strategies-list__new {
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px dashed var(--border);
+  background: rgba(34, 197, 94, 0.05);
+  color: #22c55e;
+  cursor: pointer;
+  font: 600 13px/1 var(--mono);
+  transition: all 0.15s ease;
+  margin-bottom: 4px;
+}
+
+.strategies-list__new:hover {
+  background: rgba(34, 197, 94, 0.1);
+  border-color: #22c55e;
+}
+
+.strategies-list__empty {
+  padding: 32px 20px;
+  text-align: center;
+  color: var(--text-dim);
+  font: 13px/1.4 var(--mono);
+}
+
+.strategies-list__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.03);
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+
+.strategies-list__item:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(167, 139, 250, 0.3);
+}
+
+.strategies-list__item--active {
+  border-color: #a78bfa;
+  background: rgba(167, 139, 250, 0.1);
+}
+
+.strategies-list__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.strategies-list__title {
+  font: 700 13px/1.3 var(--sans);
+  color: var(--text);
+  margin-bottom: 4px;
+  word-break: break-word;
+}
+
+.strategies-list__meta {
+  font: 11px/1.3 var(--mono);
+  color: var(--text-dim);
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.strategies-list__actions {
+  display: flex;
+  gap: 6px;
+}
+
+.strategies-list__btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  transition: all 0.15s ease;
+}
+
+.strategies-list__btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.strategies-list__btn--delete {
+  color: #ef4444;
+}
+
+.strategies-list__btn--delete:hover {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: #ef4444;
+}

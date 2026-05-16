@@ -1,0 +1,68 @@
+#===Build and dependencies===
+FROM ubuntu:24.04 AS builder
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y \
+    build-essential cmake \
+    git curl \
+    curl \
+    zip unzip tar \
+    pkg-config \
+    libssl-dev \
+    libpq-dev \
+    zlib1g-dev \
+    ca-certificates \
+    bison \
+    flex \
+    autoconf \
+    automake \
+    libtool \
+    python3 \
+    python3-pip \
+    ninja-build \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+
+RUN git clone https://github.com/microsoft/vcpkg.git && \
+    cd vcpkg && \
+    # ==============================
+    git checkout 1e199d32ad53aab1defda61ce41c380302e3f95c && \
+    # ==============================
+    ./bootstrap-vcpkg.sh
+
+COPY vcpkg.json .
+RUN ./vcpkg/vcpkg install
+COPY . .
+
+
+RUN cmake -G Ninja -B build -S . \
+    -DCMAKE_TOOLCHAIN_FILE=/app/vcpkg/scripts/buildsystems/vcpkg.cmake \
+    -DCMAKE_BUILD_TYPE=Release
+RUN cmake --build build --verbose
+
+
+#===CI test===
+RUN cd build && ctest --output-on-failure
+
+
+#===Production===
+FROM ubuntu:24.04
+
+RUN apt-get update && apt-get install -y \
+    ca-certificates \
+    libssl3 \
+    libpq5 \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN groupadd -r appgroup && useradd -r -g appgroup -s /sbin/nologin appuser
+
+WORKDIR /app
+COPY --from=builder --chown=appuser:appgroup /app/build/app ./app
+
+USER appuser
+
+EXPOSE 18080
+CMD ["./app"]

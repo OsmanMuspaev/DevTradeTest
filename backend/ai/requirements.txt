@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+psycopg[binary]
+psycopg-pool
+pydantic
+groq
+openai
+anthropic
